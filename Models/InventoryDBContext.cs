@@ -37,6 +37,9 @@ public partial class InventoryDBContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Encoding Thai
+        modelBuilder.HasAnnotation("Relational:Collation", "Thai_CI_AS");
+
         modelBuilder.Entity<Category>(entity =>
         {
             entity.ToTable("Category");
