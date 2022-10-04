@@ -22,10 +22,16 @@ public partial class InventoryDBContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json");
+        var config = builder.Build();
+        var connectionString = config.GetConnectionString("DBConnectionString");
+
         if (!optionsBuilder.IsConfigured)
         {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-            optionsBuilder.UseSqlServer("Server=SAMITZ50;Initial Catalog=ASPInventoryKerry;Persist Security Info=False;User ID=sa;Password=377040;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30; ");
+            optionsBuilder.UseSqlServer(connectionString);
         }
     }
 
